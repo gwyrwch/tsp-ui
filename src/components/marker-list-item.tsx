@@ -4,5 +4,5 @@ interface Props {
 
 export const MarkerListItem = (props: Props) => {
     const { marker } = props;
-    return <div>{marker.getLngLat}</div>;
+    return <div>{marker.getLngLat().lng}</div>;
 };

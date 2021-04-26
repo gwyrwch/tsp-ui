@@ -97,8 +97,6 @@ const App = () => {
         }
     }, []);
 
-    const markerList = [];
-
     return (
         <div className="App">
             <div>

@@ -1,13 +1,64 @@
 body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
+        "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans",
+        "Helvetica Neue", sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+    font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+        monospace;
+}
+
+.map-container {
+    display: flex;
+}
+
+.marker-list-container {
+    background-color: antiquewhite;
+    width: 30vw;
+}
+
+.marker-list-item {
+    display: grid;
+    /* width: 100%; */
+    grid-template-columns: 90% 10%;
+
+    padding: 0.5em;
+
+    border: 1px solid black;
+}
+
+.marker-list-item button {
+    background-color: transparent;
+    cursor: pointer;
+    border-radius: 50%;
+
+    width: 2.5em;
+    height: 2.5em;
+
+    border: 1px solid deeppink;
+    transition: 0.5s;
+}
+
+.marker-list-item button:hover {
+    background-color: #ffcef3;
+}
+
+.delete-marker-icon {
+    color: deeppink;
+    font-size: large;
+}
+
+.marker-list-item:hover {
+    cursor: pointer;
+    background-color: beige;
+}
+
+.lng-lat-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }

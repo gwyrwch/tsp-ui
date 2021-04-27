@@ -8,19 +8,20 @@ mapboxgl.accessToken =
 export const Map = () => {
     const [map, setMap] = useState<mapboxgl.Map>();
     useEffect(() => {
-        console.log("map created");
-        const newMap = new mapboxgl.Map({
-            container: "map", // container ID
-            style: "mapbox://styles/mapbox/streets-v11", // style URL
-            center: [-74.5, 40], // starting position [lng, lat]
-            zoom: 9, // starting zoom
-        });
-        setMap(newMap);
-    }, []);
+        if (!map) {
+            const newMap = new mapboxgl.Map({
+                container: "map", // container ID
+                style: "mapbox://styles/mapbox/streets-v11", // style URL
+                center: [27.586, 53.917], // starting position [lng, lat]
+                zoom: 14, // starting zoom
+            });
+            setMap(newMap);
+        }
+    }, [map]);
 
     return (
         <div className="map-container">
-            <div id="map" style={{ height: 500, width: 1000 }}></div>
+            <div id="map" style={{ height: 500, width: "70vw" }}></div>
             <MapInteraction map={map}></MapInteraction>
         </div>
     );

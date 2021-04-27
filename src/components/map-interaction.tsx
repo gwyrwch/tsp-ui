@@ -1,5 +1,6 @@
 import mapboxgl, { Marker } from "mapbox-gl";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
+import BrainApi from "./brain-api";
 import { MarkerListItem } from "./marker-list-item";
 
 interface Props {
@@ -12,21 +13,20 @@ mapboxgl.accessToken =
 export const MapInteraction = (props: Props) => {
     const { map } = props;
     const [markers, setMarkers] = useState<Marker[]>([]);
+    // const [durations, setDurations] = useState<Array<Array<Number>>>();
 
     useEffect(() => {
         let listener: (event: mapboxgl.MapMouseEvent) => void;
         if (map) {
             listener = (event: mapboxgl.MapMouseEvent) => {
-                console.log("click called");
                 const point = event.lngLat;
 
-                const marker = new mapboxgl.Marker()
+                const marker = new mapboxgl.Marker({ color: "#12ef56" })
                     .setLngLat([point.lng, point.lat])
                     .setPopup(new mapboxgl.Popup().setHTML("Kek!"))
                     .setDraggable(true)
                     .addTo(map);
 
-                console.log("kerk", markers.length);
                 setMarkers((old) => {
                     const new_ = old.slice();
                     new_.push(marker);
@@ -42,9 +42,71 @@ export const MapInteraction = (props: Props) => {
         };
     });
 
+    const deleteMarker = (index: number) => {
+        markers[index].remove();
+        const newMarkers = markers.filter((_, i) => i !== index);
+        setMarkers(newMarkers);
+    };
+
+    const mouseOverMarker = (index: number) => {
+        const markerSvg = markers[index]
+            .getElement()
+            .querySelectorAll('svg g[fill="#12ef56"]')[0];
+
+        if (markerSvg) {
+            markerSvg.setAttribute("fill", "#eeef32");
+        }
+    };
+
+    const mouseOutMarker = (index: number) => {
+        const markerSvg = markers[index]
+            .getElement()
+            .querySelectorAll('svg g[fill="#eeef32"]')[0];
+
+        if (markerSvg) markerSvg.setAttribute("fill", "#12ef56");
+    };
+
     const markerList = markers.map((marker, index) => {
-        return <MarkerListItem marker={marker} key={index}></MarkerListItem>;
+        return (
+            <MarkerListItem
+                marker={marker}
+                key={index}
+                markerIndex={index}
+                deleteMarker={deleteMarker}
+                mouseOverMarker={mouseOverMarker}
+                mouseOutMarker={mouseOutMarker}
+            ></MarkerListItem>
+        );
     });
 
-    return <div>{markerList}</div>;
+    const buildMatrix = () => {
+        if (markers.length > 1) {
+            const coords = markers
+                .map((marker) => {
+                    const { lng, lat } = marker.getLngLat();
+
+                    return `${lng},${lat}`;
+                })
+                .join(";");
+
+            const requestString = `https://api.mapbox.com/directions-matrix/v1/mapbox/driving/${coords}?access_token=${mapboxgl.accessToken}`;
+
+            getMarixFromApi(requestString);
+        }
+    };
+
+    const getMarixFromApi = useCallback(async (request) => {
+        const response = await fetch(request);
+
+        const data = await response.json();
+        const brainClient = BrainApi.getInstance();
+        brainClient.setMatrix(data.durations); // in seconds
+    }, []);
+
+    return (
+        <div className="marker-list-container">
+            {markerList}
+            <button onClick={buildMatrix}>BUILD MATRIX</button>
+        </div>
+    );
 };

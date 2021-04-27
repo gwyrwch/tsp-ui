@@ -1,24 +1,24 @@
-import React from "react";
+import React, { useState } from "react";
 import { Map } from "./components/map";
 import "./App.css";
 import BrainApi from "./components/brain-api";
 
 const App = () => {
     const brainClient = BrainApi.getInstance();
+    const [tour, setTour] = useState<Array<Number>>([]);
+
     return (
         <div className="App">
             <div>
                 <div>
                     <button
                         onClick={async () => {
-                            const response = await brainClient.run();
-                            const tour = [];
-                            for (const id of response["tour"]) {
-                                const point = brainClient.points[id];
-                                tour.push(point);
+                            if (brainClient.matrix !== []) {
+                                const response = await brainClient.run();
+                                const newTour = response["tour"];
+                                newTour.push(newTour[0]);
+                                setTour(newTour);
                             }
-
-                            console.log(response);
                         }}
                     >
                         RUN
@@ -39,7 +39,7 @@ const App = () => {
                     </button>
                 </div>
             </div>
-            <Map></Map>
+            <Map tour={tour}></Map>
         </div>
     );
 };

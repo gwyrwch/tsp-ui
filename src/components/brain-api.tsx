@@ -1,6 +1,8 @@
+import { Marker } from "mapbox-gl";
+
 export default class BrainApi {
     matrix: Array<Array<Number>>;
-    points: Array<Array<Number>>;
+    points: Marker[];
 
     private constructor() {
         this.matrix = [];
@@ -27,7 +29,7 @@ export default class BrainApi {
         this.matrix = matrix;
     }
 
-    setPoints(points: Array<Array<Number>>) {
+    setPoints(points: Marker[]) {
         this.points = points;
     }
 

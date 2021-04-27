@@ -89,6 +89,14 @@ export const MapInteraction = (props: Props) => {
                 })
                 .join(";");
 
+            const brainClient = BrainApi.getInstance();
+            brainClient.setPoints(
+                markers.map((marker) => {
+                    const { lng, lat } = marker.getLngLat();
+                    return [lng, lat];
+                })
+            );
+
             const requestString = `https://api.mapbox.com/directions-matrix/v1/mapbox/driving/${coords}?access_token=${mapboxgl.accessToken}`;
 
             getMarixFromApi(requestString);

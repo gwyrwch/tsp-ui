@@ -12,6 +12,11 @@ const App = () => {
                     <button
                         onClick={async () => {
                             const response = await brainClient.run();
+                            const tour = [];
+                            for (const id of response["tour"]) {
+                                const point = brainClient.points[id];
+                                tour.push(point);
+                            }
 
                             console.log(response);
                         }}

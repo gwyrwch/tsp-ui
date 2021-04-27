@@ -13,12 +13,11 @@ const App = () => {
                 <div>
                     <button
                         onClick={async () => {
-                            if (brainClient.matrix !== []) {
-                                const response = await brainClient.run();
-                                const newTour = response["tour"];
-                                newTour.push(newTour[0]);
-                                setTour(newTour);
-                            }
+                            await brainClient.buildMatrix();
+                            const response = await brainClient.run();
+                            const newTour = response["tour"];
+                            newTour.push(newTour[0]);
+                            setTour(newTour);
                         }}
                     >
                         RUN

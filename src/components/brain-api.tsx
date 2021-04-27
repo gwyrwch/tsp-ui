@@ -1,12 +1,14 @@
-import { Marker } from "mapbox-gl";
+import { accessToken, Marker } from "mapbox-gl";
 
 export default class BrainApi {
     matrix: Array<Array<Number>>;
-    points: Marker[];
+    points: Marker[]; // for tour
+    markers: Marker[]; // current markers
 
     private constructor() {
         this.matrix = [];
         this.points = [];
+        this.markers = [];
     }
 
     // singleton
@@ -31,6 +33,33 @@ export default class BrainApi {
 
     setPoints(points: Marker[]) {
         this.points = points;
+    }
+
+    setMarkers(markers: Marker[]) {
+        this.markers = markers;
+    }
+
+    async buildMatrix() {
+        if (this.markers.length > 1) {
+            const coords = this.markers
+                .map((marker) => {
+                    const { lng, lat } = marker.getLngLat();
+
+                    return `${lng},${lat}`;
+                })
+                .join(";");
+
+            const requestString = `https://api.mapbox.com/directions-matrix/v1/mapbox/driving/${coords}?access_token=${accessToken}`;
+            await this.getMarixFromApi(requestString);
+        }
+    }
+
+    async getMarixFromApi(request: string) {
+        const response = await fetch(request);
+
+        const data = await response.json();
+        this.setPoints(this.markers.slice());
+        this.setMatrix(data.durations); // in seconds
     }
 
     fetchData(methodName: string, body: string) {

@@ -81,7 +81,7 @@ export const MapInteraction = (props: Props) => {
                 },
             });
         }
-    }, [markers, map, tour]);
+    }, [map, tour]);
 
     useEffect(() => {
         let listener: (event: mapboxgl.MapMouseEvent) => void;
@@ -95,11 +95,12 @@ export const MapInteraction = (props: Props) => {
                     .setDraggable(true)
                     .addTo(map);
 
-                setMarkers((old) => {
-                    const new_ = old.slice();
-                    new_.push(marker);
-                    return new_;
-                });
+                const newMarkers = [...markers];
+                newMarkers.push(marker);
+                setMarkers(newMarkers);
+
+                const brainClient = BrainApi.getInstance();
+                brainClient.setMarkers(newMarkers.slice());
             };
             map.on("click", listener);
 
@@ -118,6 +119,9 @@ export const MapInteraction = (props: Props) => {
         markers[index].remove();
         const newMarkers = markers.filter((_, i) => i !== index);
         setMarkers(newMarkers);
+
+        const brainClient = BrainApi.getInstance();
+        brainClient.setMarkers(newMarkers);
     };
 
     const mouseOverMarker = (index: number) => {
@@ -151,37 +155,5 @@ export const MapInteraction = (props: Props) => {
         );
     });
 
-    const buildMatrix = () => {
-        if (markers.length > 1) {
-            const coords = markers
-                .map((marker) => {
-                    const { lng, lat } = marker.getLngLat();
-
-                    return `${lng},${lat}`;
-                })
-                .join(";");
-
-            const brainClient = BrainApi.getInstance();
-            brainClient.setPoints(markers.slice());
-
-            const requestString = `https://api.mapbox.com/directions-matrix/v1/mapbox/driving/${coords}?access_token=${mapboxgl.accessToken}`;
-
-            getMarixFromApi(requestString);
-        }
-    };
-
-    const getMarixFromApi = useCallback(async (request) => {
-        const response = await fetch(request);
-
-        const data = await response.json();
-        const brainClient = BrainApi.getInstance();
-        brainClient.setMatrix(data.durations); // in seconds
-    }, []);
-
-    return (
-        <div className="marker-list-container">
-            {markerList}
-            <button onClick={buildMatrix}>BUILD MATRIX</button>
-        </div>
-    );
+    return <div className="marker-list-container">{markerList}</div>;
 };

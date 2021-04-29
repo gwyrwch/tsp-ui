@@ -1,46 +1,15 @@
-import React, { useState } from "react";
-import { Map } from "./components/map";
 import "./App.css";
-import BrainApi from "./components/brain-api";
+import { initializeFirebase } from "./firebase/firebase";
+import { NotFound } from "./components/not-found";
+import { useRoutes } from "raviger";
+import { ROUTES } from "./routes";
 
 const App = () => {
-    const brainClient = BrainApi.getInstance();
-    const [tour, setTour] = useState<Array<Number>>([]);
-
-    return (
-        <div className="App">
-            <div>
-                <div>
-                    <button
-                        onClick={async () => {
-                            await brainClient.buildMatrix();
-                            const response = await brainClient.run();
-                            const newTour = response["tour"];
-                            newTour.push(newTour[0]);
-                            setTour(newTour);
-                        }}
-                    >
-                        RUN
-                    </button>
-                </div>
-                <div>
-                    <button onClick={brainClient.addPoint}>ADD POINT</button>
-                </div>
-                <div>
-                    <button onClick={brainClient.newFile}>NEW FILE</button>
-                </div>
-                <div>
-                    <button onClick={brainClient.getFile}>GET FILE</button>
-                </div>
-                <div>
-                    <button onClick={brainClient.getAllFiles}>
-                        GET ALL FILES
-                    </button>
-                </div>
-            </div>
-            <Map tour={tour}></Map>
-        </div>
-    );
+    const { auth, database } = initializeFirebase();
+    const routeResult = useRoutes(ROUTES, {
+        routeProps: { auth: auth, database: database },
+    });
+    return <div>{routeResult || <NotFound />}</div>;
 };
 
 export default App;

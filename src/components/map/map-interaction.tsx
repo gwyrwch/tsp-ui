@@ -1,8 +1,7 @@
 import GeoJSON from "geojson";
 import mapboxgl, { GeoJSONSource, Marker } from "mapbox-gl";
 import React, { useCallback, useEffect, useState } from "react";
-import { setTokenSourceMapRange } from "typescript";
-import BrainApi from "./brain-api";
+import BrainApi from "../brain-api";
 import { MarkerListItem } from "./marker-list-item";
 
 interface Props {
@@ -75,7 +74,7 @@ export const MapInteraction = (props: Props) => {
                     "line-cap": "round",
                 },
                 paint: {
-                    "line-color": "#3887be",
+                    "line-color": "#eca175",
                     "line-width": 5,
                     "line-opacity": 0.75,
                 },

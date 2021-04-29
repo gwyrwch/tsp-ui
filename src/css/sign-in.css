@@ -1,0 +1,190 @@
+.modal {
+    position: fixed;
+    width: 100%;
+    height: 100vh;
+
+    z-index: 2;
+
+    background-color: rgba(0, 0, 0, 0.5); /* Black w/ opacity */
+    color: #000;
+    font-family: "Cera", "Open Sans", sans-serif !important;
+}
+
+.modal-show {
+    display: block;
+}
+
+.modal-close {
+    display: none;
+}
+
+.modal-wrapper {
+    position: relative;
+    top: 15vh;
+
+    width: 60%;
+
+    background-color: white;
+    border: 0.3em solid var(--table-color-light);
+    box-shadow: 0 0 1em rgba(0, 0, 0, 0.5);
+    border-radius: 1em;
+
+    margin: 0 auto 0;
+    /* padding: 1vw; */
+
+    transition: all 1s;
+
+    z-index: 2;
+}
+
+.modal-header {
+    height: 3em;
+    line-height: 3em;
+
+    color: var(--orange-color);
+
+    border-bottom: 0.1em solid var(--table-color-light);
+    text-align: center;
+}
+
+.modal-header h3 {
+    margin: 0;
+}
+
+.btn-cancel {
+    margin: 1.5em 0 1em 0;
+    padding: 0.4em 2em;
+
+    border: none;
+    border-radius: 0.5em;
+    outline: none;
+
+    background: var(--rosso-corsa);
+
+    color: var(--text-color);
+
+    cursor: pointer;
+}
+
+.sign-in-input {
+    color: #1f3349;
+    font-size: 15px;
+    line-height: 24px;
+    font-family: "Open Sans", sans-serif;
+    font-weight: 400;
+    -webkit-font-smoothing: antialiased;
+
+    box-shadow: inset 0 0 0 1px #c6d2e1;
+    border-radius: 4px;
+    transition: background-color 0.125s, box-shadow 0.125s;
+    display: block;
+    width: 95%;
+
+    font-family: inherit;
+    background: 0 0;
+    border: 0;
+    margin: 0;
+    padding: 6px 12px;
+}
+
+.sign-in-div {
+    position: relative;
+    left: 25vw;
+    top: 15vh;
+    width: 50vw;
+
+    padding: 1em;
+}
+
+.sign-in-div h4 {
+    font-size: 35px;
+    line-height: 42px;
+    font-weight: 700;
+    margin-bottom: 0;
+}
+
+.sign-in-form {
+}
+
+.sign-in-form div {
+    position: relative;
+    padding-top: 1em;
+    padding-bottom: 0.5em;
+}
+
+.sign-in-form div label {
+    font-weight: 700;
+    font-size: 12px;
+    line-height: 18px;
+}
+
+@import url(https://fonts.googleapis.com/css?family=Roboto:500);
+
+.google-icon-wrapper {
+    display: inline;
+}
+.google-icon {
+    display: inline;
+    font-size: 14px;
+}
+
+.sign-in-form .sign-in-button-div {
+    padding-top: 0.5em;
+    padding-bottom: 0.5em;
+}
+
+.sign-in-button {
+    display: inline-block;
+    font-weight: 700;
+    background-color: var(--main-blue-color);
+    font-size: 12px;
+    color: #fff;
+    border-radius: 18px;
+    padding: 6px 18px;
+    text-align: center;
+    transition: background-color 0.125s, border-color 0.125s, color 0.125s;
+
+    margin: 0;
+    border: 0;
+
+    padding-left: 24px !important;
+    padding-right: 24px !important;
+    padding-top: 12px !important;
+    padding-bottom: 12px !important;
+}
+
+.sign-in-form span {
+    color: var(--rosso-corsa);
+    font-size: small;
+    height: 1em;
+    text-align: center;
+    font-style: italic;
+    padding-left: 1em;
+    padding-right: 1em;
+}
+
+.dont-have-account-div {
+    border-top: 1px solid #c6d2e1;
+    padding-top: 1vh;
+    font-size: 12px;
+}
+
+.chevron-right-icon {
+    font-size: 13px;
+}
+.dont-have-account-div span,
+.sign-in-with-google-div span {
+    color: var(--main-blue-color);
+    cursor: pointer;
+    transition: color 0.125s;
+}
+
+.dont-have-account-div span:hover,
+.sign-in-with-google-div span:hover {
+    color: #4264c4;
+}
+
+.sign-in-with-google-div {
+    margin-top: 1vh;
+    font-size: 12px;
+}

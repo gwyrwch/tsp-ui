@@ -1,0 +1,56 @@
+.router-icon {
+    font-size: 30px;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    /* background-color: rgba(14, 16, 18, 0.6); */
+    background-color: #0e1012;
+    color: white;
+    padding-top: 0.7em;
+    padding-bottom: 0.7em;
+    padding-left: 1em;
+    padding-right: 1em;
+
+    margin-bottom: 0.5em;
+}
+
+.router-icon-span {
+    font-size: 30px;
+    font-family: Cerapro, sans-serif;
+    font-weight: 700;
+}
+
+.router-icon-span span {
+    color: var(--main-blue-color);
+}
+
+.router-icon-container {
+    display: inline-block;
+}
+
+.header-buttons-container {
+    display: inline-block;
+}
+
+.header-button {
+    position: relative;
+    border-radius: 100px;
+    background-color: var(--main-blue-color);
+    transition: 150ms;
+    color: #fff;
+    padding: 8px 12px;
+    font-size: 14px;
+    line-height: 16px;
+    font-weight: 600;
+    text-align: center;
+    cursor: pointer;
+    border: 0;
+}
+
+.header-sign-in-button {
+    background-color: transparent;
+}

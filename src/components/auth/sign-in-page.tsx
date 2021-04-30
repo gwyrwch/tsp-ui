@@ -57,66 +57,68 @@ export const SignInPage = (props: Props) => {
     };
 
     return (
-        <div className="sign-in-div">
-            <h4>Sign in</h4>
-            <form
-                onSubmit={singInWitnEmailAndPassword}
-                className="sign-in-form"
-            >
-                <div>
-                    <label>
-                        Email:
-                        <input
-                            type="email"
-                            value={email}
-                            placeholder="gwyrwch@mail.ru"
-                            onChange={createInputChangeHandler(setEmail)}
-                            className="sign-in-input"
-                        />
-                    </label>
-                </div>
-                <div>
-                    <label>
-                        Password:
-                        <input
-                            type="password"
-                            value={password}
-                            placeholder="password"
-                            onChange={createInputChangeHandler(setPassword)}
-                            className="sign-in-input"
-                        />
-                    </label>
-                </div>
-                <div className="sign-in-button-div">
-                    <input
-                        className="sign-in-button"
-                        type="submit"
-                        value="Sign in"
-                    />
-                </div>
-                <span>{errorMessage}</span>
-            </form>
-            <div className="dont-have-account-div">
-                Don't have an account?{" "}
-                <span onClick={() => navigate("sign_up")}>
-                    Sign up for Router...
-                </span>
-            </div>
-            <div className="sign-in-with-google-div">
-                You can also{" "}
-                <span onClick={signInWithGoogle}>
-                    sign in with{"  "}
-                    <div className="google-icon-wrapper">
-                        <IconContext.Provider
-                            value={{
-                                className: "google-icon",
-                            }}
-                        >
-                            <FcGoogle />
-                        </IconContext.Provider>
-                        <span>oogle...</span>
+        <div className="white-wrapper">
+            <div className="sign-in-div">
+                <h4>Sign in</h4>
+                <form
+                    onSubmit={singInWitnEmailAndPassword}
+                    className="sign-in-form"
+                >
+                    <div>
+                        <label>
+                            Email:
+                            <input
+                                type="email"
+                                value={email}
+                                placeholder="gwyrwch@mail.ru"
+                                onChange={createInputChangeHandler(setEmail)}
+                                className="sign-in-input"
+                            />
+                        </label>
                     </div>
-                </span>
+                    <div>
+                        <label>
+                            Password:
+                            <input
+                                type="password"
+                                value={password}
+                                placeholder="password"
+                                onChange={createInputChangeHandler(setPassword)}
+                                className="sign-in-input"
+                            />
+                        </label>
+                    </div>
+                    <div className="sign-in-button-div">
+                        <input
+                            className="sign-in-button"
+                            type="submit"
+                            value="Sign in"
+                        />
+                    </div>
+                    <span>{errorMessage}</span>
+                </form>
+                <div className="dont-have-account-div">
+                    Don't have an account?{" "}
+                    <span onClick={() => navigate("sign_up")}>
+                        Sign up for Router...
+                    </span>
+                </div>
+                <div className="sign-in-with-google-div">
+                    You can also{" "}
+                    <span onClick={signInWithGoogle}>
+                        sign in with{"  "}
+                        <div className="google-icon-wrapper">
+                            <IconContext.Provider
+                                value={{
+                                    className: "google-icon",
+                                }}
+                            >
+                                <FcGoogle />
+                            </IconContext.Provider>
+                            <span>oogle...</span>
+                        </div>
+                    </span>
+                </div>
             </div>
         </div>
     );

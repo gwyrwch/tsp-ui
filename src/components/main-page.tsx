@@ -4,6 +4,7 @@ import firebase from "../firebase/firebase";
 import BrainApi from "./brain-api";
 import { Header } from "./header";
 import { Map } from "./map/map";
+import { Menu } from "./menu";
 
 interface Props {
     auth: firebase.auth.Auth;
@@ -15,6 +16,7 @@ export const MainPage = (props: Props) => {
     const brainClient = BrainApi.getInstance();
     const [tour, setTour] = useState<Array<Number>>([]);
     const [currentUser, setCurrentUser] = useState<firebase.User | null>();
+    const [loading, setLoading] = useState<boolean>(false);
 
     useEffect(() => {
         auth.onAuthStateChanged((user) => {
@@ -24,6 +26,18 @@ export const MainPage = (props: Props) => {
         });
     }, [auth]);
 
+    const run = async () => {
+        setLoading(true);
+
+        await brainClient.buildMatrix();
+        const response = await brainClient.run();
+        const newTour = response["tour"];
+        newTour.push(newTour[0]);
+        setTour(newTour);
+
+        setLoading(false);
+    };
+
     return (
         <div className="App">
             <div>
@@ -31,35 +45,9 @@ export const MainPage = (props: Props) => {
                     auth={auth}
                     isSignedIn={currentUser ? true : false}
                 ></Header>
-                <div>
-                    <button
-                        onClick={async () => {
-                            await brainClient.buildMatrix();
-                            const response = await brainClient.run();
-                            const newTour = response["tour"];
-                            newTour.push(newTour[0]);
-                            setTour(newTour);
-                        }}
-                    >
-                        RUN
-                    </button>
-                </div>
-                <div>
-                    <button onClick={brainClient.addPoint}>ADD POINT</button>
-                </div>
-                <div>
-                    <button onClick={brainClient.newFile}>NEW FILE</button>
-                </div>
-                <div>
-                    <button onClick={brainClient.getFile}>GET FILE</button>
-                </div>
-                <div>
-                    <button onClick={brainClient.getAllFiles}>
-                        GET ALL FILES
-                    </button>
-                </div>
+                <Menu runOnClick={run} runLoading={loading}></Menu>
             </div>
-            <Map tour={tour}></Map>
+            <Map tour={tour} loading={loading}></Map>
         </div>
     );
 };

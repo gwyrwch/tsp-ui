@@ -16,6 +16,8 @@
     padding-right: 1em;
 
     margin-bottom: 0.5em;
+
+    border-bottom: azure 1px solid;
 }
 
 .router-icon-span {

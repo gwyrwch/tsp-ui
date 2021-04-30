@@ -51,64 +51,66 @@ export const SignUpPage = (props: Props) => {
     };
 
     return (
-        <div className="sign-in-div">
-            <h4>Sign up</h4>
-            <form
-                onSubmit={singUpWitnEmailAndPassword}
-                className="sign-in-form"
-            >
-                <div>
-                    <label>
-                        Email:
+        <div className="white-wrapper">
+            <div className="sign-in-div">
+                <h4>Sign up</h4>
+                <form
+                    onSubmit={singUpWitnEmailAndPassword}
+                    className="sign-in-form"
+                >
+                    <div>
+                        <label>
+                            Email:
+                            <input
+                                type="email"
+                                value={email}
+                                placeholder="gwyrwch@mail.ru"
+                                onChange={createInputChangeHandler(setEmail)}
+                                className="sign-in-input"
+                            />
+                        </label>
+                    </div>
+                    <div>
+                        <label>
+                            Password:
+                            <input
+                                type="password"
+                                value={password}
+                                placeholder="password"
+                                onChange={createInputChangeHandler(setPassword)}
+                                className="sign-in-input"
+                            />
+                        </label>
+                    </div>
+                    <div>
+                        <label>
+                            Repeat password:
+                            <input
+                                type="password"
+                                value={passwordRepeat}
+                                placeholder="password"
+                                onChange={createInputChangeHandler(
+                                    setPasswordRepeat
+                                )}
+                                className="sign-in-input"
+                            />
+                        </label>
+                    </div>
+                    <div className="sign-in-button-div">
                         <input
-                            type="email"
-                            value={email}
-                            placeholder="gwyrwch@mail.ru"
-                            onChange={createInputChangeHandler(setEmail)}
-                            className="sign-in-input"
+                            className="sign-in-button"
+                            type="submit"
+                            value="Sign up"
                         />
-                    </label>
+                    </div>
+                    <span>{errorMessage}</span>
+                </form>
+                <div className="dont-have-account-div">
+                    Already have an account?{" "}
+                    <span onClick={() => navigate("sign_in")}>
+                        Sign in for Router...
+                    </span>
                 </div>
-                <div>
-                    <label>
-                        Password:
-                        <input
-                            type="password"
-                            value={password}
-                            placeholder="password"
-                            onChange={createInputChangeHandler(setPassword)}
-                            className="sign-in-input"
-                        />
-                    </label>
-                </div>
-                <div>
-                    <label>
-                        Repeat password:
-                        <input
-                            type="password"
-                            value={passwordRepeat}
-                            placeholder="password"
-                            onChange={createInputChangeHandler(
-                                setPasswordRepeat
-                            )}
-                            className="sign-in-input"
-                        />
-                    </label>
-                </div>
-                <div className="sign-in-button-div">
-                    <input
-                        className="sign-in-button"
-                        type="submit"
-                        value="Sign up"
-                    />
-                </div>
-                <span>{errorMessage}</span>
-            </form>
-            <div className="dont-have-account-div">
-                Already have an account?{" "}
-                <span onClick={() => navigate("sign_in")}>
-                    Sign in for Router...
-                </span>
             </div>
         </div>
     );

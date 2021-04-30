@@ -2,8 +2,10 @@ import React from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
 import "./css/sign-in.css";
+import "./css/menu.css";
 import "./css/header.css";
 import "mapbox-gl/dist/mapbox-gl.css";
+import "@mapbox/assembly/dist/assembly.css";
 
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";

@@ -1,0 +1,33 @@
+.menu {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    margin-bottom: 2em;
+}
+
+.menu button {
+    margin: 1em 2em 1em 2em;
+
+    border-radius: 100px;
+    background-color: var(--main-blue-color);
+    transition: 150ms;
+    color: #fff;
+    padding: 8px 12px;
+    font-size: 14px;
+    line-height: 16px;
+    font-weight: 600;
+    text-align: center;
+    cursor: pointer;
+    border: 0;
+    width: 10em;
+}
+
+.menu button:hover {
+    background-color: #066fdf;
+}
+
+.menu button:disabled {
+    background-color: rgb(73, 73, 73);
+    cursor: not-allowed;
+}

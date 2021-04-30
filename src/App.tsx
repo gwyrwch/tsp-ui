@@ -9,7 +9,7 @@ const App = () => {
     const routeResult = useRoutes(ROUTES, {
         routeProps: { auth: auth, database: database },
     });
-    return <div>{routeResult || <NotFound />}</div>;
+    return <>{routeResult || <NotFound />}</>;
 };
 
 export default App;

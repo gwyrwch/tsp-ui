@@ -7,20 +7,25 @@ import { MarkerListItem } from "./marker-list-item";
 interface Props {
     map: mapboxgl.Map | undefined;
     tour: Array<Number>;
+    loading: boolean;
+    travelMode: string;
 }
 
 mapboxgl.accessToken =
     "pk.eyJ1IjoiZ3d5cndjaCIsImEiOiJja254NWpwbG8wNjVxMnByeHFnenJuZHN0In0.TcPjWaplIJGJccgDCgRwoA";
 
 export const MapInteraction = (props: Props) => {
-    const { map, tour } = props;
+    const { map, tour, loading, travelMode } = props;
     const [markers, setMarkers] = useState<Marker[]>([]);
+    // const [loading, setLoading] = useState<boolean>(false);
     // const [durations, setDurations] = useState<Array<Array<Number>>>();
 
-    const getDrections = useCallback(async () => {
+    const getDirections = useCallback(async () => {
         if (!tour || tour.length === 0 || !map) {
             return;
         }
+
+        // setLoading(true);
         const brainClient = BrainApi.getInstance();
         const pointsFormatted = tour
             .map((index) => {
@@ -29,17 +34,15 @@ export const MapInteraction = (props: Props) => {
             })
             .join(";");
         const request =
-            "https://api.mapbox.com/directions/v5/mapbox/driving/" +
+            `https://api.mapbox.com/directions/v5/mapbox/${travelMode}/` +
             pointsFormatted +
             "?geometries=geojson&access_token=" +
             mapboxgl.accessToken;
 
         const response = await fetch(request);
         const data = await response.json();
-        console.log("data123", data);
 
         const route = data.routes[0].geometry.coordinates;
-        console.log(route);
         const geojson1 = {
             type: "Feature",
             properties: {},
@@ -74,23 +77,26 @@ export const MapInteraction = (props: Props) => {
                     "line-cap": "round",
                 },
                 paint: {
-                    "line-color": "#eca175",
+                    "line-color": "#007afc",
                     "line-width": 5,
                     "line-opacity": 0.75,
                 },
             });
         }
+
+        // setLoading(false);
     }, [map, tour]);
 
     useEffect(() => {
         let listener: (event: mapboxgl.MapMouseEvent) => void;
         if (map) {
             listener = (event: mapboxgl.MapMouseEvent) => {
+                if (loading) return;
                 const point = event.lngLat;
 
-                const marker = new mapboxgl.Marker({ color: "#12ef56" })
+                const marker = new mapboxgl.Marker({ color: "#007afc" })
                     .setLngLat([point.lng, point.lat])
-                    .setPopup(new mapboxgl.Popup().setHTML("Kek!"))
+                    // .setPopup(new mapboxgl.Popup().setHTML("Kek!"))
                     .setDraggable(true)
                     .addTo(map);
 
@@ -103,7 +109,7 @@ export const MapInteraction = (props: Props) => {
             };
             map.on("click", listener);
 
-            getDrections();
+            getDirections();
 
             // map.addLayer()
         }
@@ -112,7 +118,7 @@ export const MapInteraction = (props: Props) => {
                 map.off("click", listener);
             }
         };
-    });
+    }, [map, getDirections, markers, loading]);
 
     const deleteMarker = (index: number) => {
         markers[index].remove();
@@ -126,19 +132,19 @@ export const MapInteraction = (props: Props) => {
     const mouseOverMarker = (index: number) => {
         const markerSvg = markers[index]
             .getElement()
-            .querySelectorAll('svg g[fill="#12ef56"]')[0];
+            .querySelectorAll('svg g[fill="#007afc"]')[0];
 
         if (markerSvg) {
-            markerSvg.setAttribute("fill", "#eeef32");
+            markerSvg.setAttribute("fill", "#fa3434");
         }
     };
 
     const mouseOutMarker = (index: number) => {
         const markerSvg = markers[index]
             .getElement()
-            .querySelectorAll('svg g[fill="#eeef32"]')[0];
+            .querySelectorAll('svg g[fill="#fa3434"]')[0];
 
-        if (markerSvg) markerSvg.setAttribute("fill", "#12ef56");
+        if (markerSvg) markerSvg.setAttribute("fill", "#007afc");
     };
 
     const markerList = markers.map((marker, index) => {
@@ -154,5 +160,10 @@ export const MapInteraction = (props: Props) => {
         );
     });
 
-    return <div className="marker-list-container">{markerList}</div>;
+    return (
+        <div className="marker-list-container">
+            {markerList}
+            {loading ? "loading" : "notload"}
+        </div>
+    );
 };

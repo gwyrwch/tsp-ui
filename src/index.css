@@ -16,6 +16,8 @@
     --table-color-light: #931040;
     --background-color: #250410;
     --text-color: #f3f3f4;
+
+    height: 100%;
 }
 
 body {
@@ -23,6 +25,9 @@ body {
     font-family: Cerapro, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+
+    height: 100%;
+    background-color: #0e1012;
 }
 
 code {
@@ -35,8 +40,13 @@ code {
 }
 
 .marker-list-container {
-    background-color: antiquewhite;
+    background-color: #0e1012;
     width: 30vw;
+    height: 600px;
+
+    overflow-y: scroll;
+
+    color: white;
 }
 
 .marker-list-item {
@@ -44,12 +54,19 @@ code {
     /* width: 100%; */
     grid-template-columns: 90% 10%;
 
-    padding: 0.5em;
+    padding: 0.5em 0.9em 0.5em 0.9em;
+    margin: 0.1em;
 
-    border: 1px solid black;
+    /* border: 1px solid black; */
+    border-radius: 30px;
+    box-shadow: inset 0px 0px 0px 1px #566171;
 }
 
 .marker-list-item button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
     background-color: transparent;
     cursor: pointer;
     border-radius: 50%;
@@ -57,26 +74,36 @@ code {
     width: 2.5em;
     height: 2.5em;
 
-    border: 1px solid deeppink;
+    border: 1px solid var(--main-blue-color);
     transition: 0.5s;
 }
 
 .marker-list-item button:hover {
-    background-color: #ffcef3;
+    background-color: #566171;
 }
 
 .delete-marker-icon {
-    color: deeppink;
+    color: var(--main-blue-color);
     font-size: large;
 }
 
 .marker-list-item:hover {
     cursor: pointer;
-    background-color: beige;
+    background-color: #56617162;
 }
 
 .lng-lat-container {
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+#root {
+    height: 100%;
+}
+
+.white-wrapper {
+    width: 100%;
+    height: 100%;
+    background-color: white;
 }

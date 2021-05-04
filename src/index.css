@@ -5,7 +5,7 @@
     --rosewood: #4f000bff;
     --rosewood-2: #6a040fff;
     --dark-red: #9d0208ff;
-    --rosso-corsa: #d00000ff;
+    --rosso-corsa: rgb(241, 0, 0);
     --cultured: #f3f3f4ff;
     --gray-web: #7e7f83ff;
     --jet: #34312dff;
@@ -21,7 +21,6 @@
 }
 
 body {
-    margin: 0;
     font-family: Cerapro, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -37,6 +36,8 @@ code {
 
 .map-container {
     display: flex;
+    padding-left: 1em;
+    padding-right: 1em;
 }
 
 .marker-list-container {
@@ -55,7 +56,7 @@ code {
     grid-template-columns: 90% 10%;
 
     padding: 0.5em 0.9em 0.5em 0.9em;
-    margin: 0.1em;
+    margin: 0.2em;
 
     /* border: 1px solid black; */
     border-radius: 30px;

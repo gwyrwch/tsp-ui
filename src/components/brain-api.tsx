@@ -4,17 +4,29 @@ export default class BrainApi {
     matrix: Array<Array<Number>>;
     points: Marker[]; // for tour
     markers: Marker[]; // current markers
+    travelMode: string;
+    matrixTravelMode: string;
 
     private constructor() {
         this.matrix = [];
         this.points = [];
         this.markers = [];
+        this.travelMode = "driving";
+        this.matrixTravelMode = "driving";
     }
 
     // singleton
     private static _instance: BrainApi;
     static getInstance() {
         return this._instance || (this._instance = new this());
+    }
+
+    setTravelMode(newTravelMode: string) {
+        this.travelMode = newTravelMode;
+    }
+
+    setMatrixTravelMode(newTravelMode: string) {
+        this.matrixTravelMode = newTravelMode;
     }
 
     setMatrix(matrix: Array<Array<Number>>) {
@@ -49,8 +61,9 @@ export default class BrainApi {
                 })
                 .join(";");
 
-            const requestString = `https://api.mapbox.com/directions-matrix/v1/mapbox/driving/${coords}?access_token=${accessToken}`;
+            const requestString = `https://api.mapbox.com/directions-matrix/v1/mapbox/${this.travelMode}/${coords}?access_token=${accessToken}`;
             await this.getMarixFromApi(requestString);
+            this.setMatrixTravelMode(this.travelMode);
         }
     }
 
@@ -83,17 +96,6 @@ export default class BrainApi {
         return response.json();
     }
 
-    async newFile() {
-        const response = await this.fetchData(
-            "newfile",
-            JSON.stringify({
-                userId: 123,
-                filename: "xyz.tsp",
-            })
-        );
-        return response.json();
-    }
-
     async getFile() {
         const response = await this.fetchData(
             "file",
@@ -112,15 +114,42 @@ export default class BrainApi {
         return response.json();
     }
 
-    async run() {
+    async run(uid: string | undefined) {
         const response = await this.fetchData(
             "run",
             JSON.stringify({
-                userId: 5,
+                userId: uid ? uid : "DEFAULT_USER",
                 matrix: this.matrix,
             })
         );
 
         return response.json();
+    }
+
+    async newFile(uid: string, fileName: string) {
+        console.log(uid, fileName);
+        const response = await this.fetchData(
+            "newfile",
+            JSON.stringify({
+                userId: uid,
+                filename: fileName,
+            })
+        );
+        return response.json();
+    }
+
+    async saveFile(uid: string, fileName: string) {
+        const response = await this.fetchData(
+            "savefile",
+            JSON.stringify({
+                userId: uid,
+                filename: fileName,
+                matrix: this.matrix,
+            })
+        );
+
+        const kek = response.json();
+        console.log(kek);
+        return kek;
     }
 }

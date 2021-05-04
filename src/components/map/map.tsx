@@ -1,5 +1,6 @@
 import mapboxgl from "mapbox-gl";
 import { FormEvent, useEffect, useState } from "react";
+import BrainApi from "../brain-api";
 import { MapInteraction } from "./map-interaction";
 import { TravelMode } from "./travel-mode";
 
@@ -16,6 +17,7 @@ export const Map = (props: Props) => {
 
     const [map, setMap] = useState<mapboxgl.Map>();
     const [travelMode, setTravelMode] = useState<string>("driving");
+    const brainClient = BrainApi.getInstance();
 
     useEffect(() => {
         if (!map) {
@@ -35,6 +37,7 @@ export const Map = (props: Props) => {
         if (e.target.name === "profile") {
             const profile = e.target.value;
             setTravelMode(profile);
+            brainClient.setTravelMode(profile);
         } else {
             console.log("govno");
         }

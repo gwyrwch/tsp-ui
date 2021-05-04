@@ -24,46 +24,44 @@
 
     width: 60%;
 
-    background-color: white;
-    border: 0.3em solid var(--table-color-light);
+    color: white;
+    border: 0.1em solid #fff;
+    background-color: rgba(0, 0, 0, 0.75);
     box-shadow: 0 0 1em rgba(0, 0, 0, 0.5);
     border-radius: 1em;
 
     margin: 0 auto 0;
-    /* padding: 1vw; */
+    padding: 1em;
 
     transition: all 1s;
 
     z-index: 2;
 }
 
-.modal-header {
-    height: 3em;
-    line-height: 3em;
-
-    color: var(--orange-color);
-
-    border-bottom: 0.1em solid var(--table-color-light);
+.modal-wrapper button {
+    margin: 1em 0.5em 1em 0em;
+    border-radius: 100px;
+    background-color: var(--main-blue-color);
+    transition: 150ms;
+    color: #fff;
+    padding: 8px 12px;
+    font-size: 14px;
+    line-height: 16px;
+    font-weight: 600;
     text-align: center;
-}
-
-.modal-header h3 {
-    margin: 0;
-}
-
-.btn-cancel {
-    margin: 1.5em 0 1em 0;
-    padding: 0.4em 2em;
-
-    border: none;
-    border-radius: 0.5em;
-    outline: none;
-
-    background: var(--rosso-corsa);
-
-    color: var(--text-color);
-
     cursor: pointer;
+    border: 0;
+    width: 6em;
+}
+
+.modal-wrapper input {
+    width: 100%;
+    color: #fff;
+    outline: none;
+}
+
+.modal-wrapper .btn-modal-cancel {
+    background-color: var(--rosso-corsa);
 }
 
 .sign-in-input {
@@ -153,14 +151,13 @@
     padding-bottom: 12px !important;
 }
 
-.sign-in-form span {
+.sign-in-form span,
+.modal-wrapper span {
     color: var(--rosso-corsa);
     font-size: small;
     height: 1em;
     text-align: center;
     font-style: italic;
-    padding-left: 1em;
-    padding-right: 1em;
 }
 
 .dont-have-account-div {

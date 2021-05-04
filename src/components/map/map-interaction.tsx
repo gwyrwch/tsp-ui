@@ -25,8 +25,12 @@ export const MapInteraction = (props: Props) => {
             return;
         }
 
-        // setLoading(true);
         const brainClient = BrainApi.getInstance();
+        if (travelMode !== brainClient.matrixTravelMode) {
+            // TODO: show modal that needed to rerun
+            return;
+        }
+
         const pointsFormatted = tour
             .map((index) => {
                 const { lng, lat } = brainClient.points[+index].getLngLat(); // use brainClient.points
@@ -41,6 +45,7 @@ export const MapInteraction = (props: Props) => {
 
         const response = await fetch(request);
         const data = await response.json();
+        console.log("data", data);
 
         const route = data.routes[0].geometry.coordinates;
         const geojson1 = {
@@ -85,7 +90,7 @@ export const MapInteraction = (props: Props) => {
         }
 
         // setLoading(false);
-    }, [map, tour]);
+    }, [map, tour, travelMode]);
 
     useEffect(() => {
         let listener: (event: mapboxgl.MapMouseEvent) => void;
@@ -163,7 +168,7 @@ export const MapInteraction = (props: Props) => {
     return (
         <div className="marker-list-container">
             {markerList}
-            {loading ? "loading" : "notload"}
+            {loading ? "loading" : "loaded"}
         </div>
     );
 };

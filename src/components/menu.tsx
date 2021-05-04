@@ -2,6 +2,8 @@ interface Props {
     runOnClick: () => void;
     newFileOnClick: () => void;
     saveFileOnClick: () => void;
+    allFilesOnClick: () => void;
+    openFileOnClick: () => void;
     runLoading: boolean;
     isSignedIn: boolean;
 }
@@ -11,6 +13,8 @@ export const Menu = (props: Props) => {
         runOnClick,
         newFileOnClick,
         saveFileOnClick,
+        allFilesOnClick,
+        openFileOnClick,
         runLoading,
         isSignedIn,
     } = props;
@@ -29,7 +33,7 @@ export const Menu = (props: Props) => {
 
             <button
                 disabled={runLoading || !isSignedIn}
-                onClick={() => console.log("brainClient.openFile")}
+                onClick={openFileOnClick}
             >
                 OPEN FILE
             </button>
@@ -43,7 +47,7 @@ export const Menu = (props: Props) => {
 
             <button
                 disabled={runLoading || !isSignedIn}
-                onClick={() => console.log("brainClient.getAllFiles")}
+                onClick={allFilesOnClick}
             >
                 GET ALL FILES
             </button>

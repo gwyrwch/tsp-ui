@@ -84,31 +84,19 @@ export default class BrainApi {
         });
     }
 
-    async addPoint() {
-        const response = await this.fetchData(
-            "addpoint",
-            JSON.stringify({
-                userId: 123,
-                filename: "test.tsp",
-                point: "1",
-            })
-        );
-        return response.json();
-    }
-
-    async getFile() {
+    async getFile(uid: string, fileName: string) {
         const response = await this.fetchData(
             "file",
-            JSON.stringify({ userId: 5, filename: "getFile.tsp" })
+            JSON.stringify({ userId: uid, filename: fileName })
         );
 
         return response.json();
     }
 
-    async getAllFiles() {
+    async getAllFiles(uid: string) {
         const response = await this.fetchData(
             "allfiles",
-            JSON.stringify({ userId: 5 })
+            JSON.stringify({ userId: uid })
         );
 
         return response.json();
@@ -145,11 +133,13 @@ export default class BrainApi {
                 userId: uid,
                 filename: fileName,
                 matrix: this.matrix,
+                points: this.points.map((marker) => [
+                    marker.getLngLat().lng,
+                    marker.getLngLat().lat,
+                ]),
             })
         );
 
-        const kek = response.json();
-        console.log(kek);
-        return kek;
+        return response.json();
     }
 }

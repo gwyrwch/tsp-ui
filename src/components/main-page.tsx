@@ -180,11 +180,16 @@ export const MainPage = (props: Props) => {
                     const markers = points.map((point: number[]) => {
                         return new mapboxgl.Marker({
                             color: "#007afc",
-                        }).setLngLat([point[0], point[1]]);
+                        })
+                            .setLngLat([point[0], point[1]])
+                            .setDraggable(true);
                     });
 
                     brainClient.setMatrix(matrix);
                     brainClient.setPoints(markers);
+                    document.body.dispatchEvent(
+                        new CustomEvent("abacaba", { detail: "123" })
+                    );
                     // brainClient.setMarkers(markers);
 
                     setErrorModalMessage(null);

@@ -94,6 +94,8 @@ export const MapInteraction = (props: Props) => {
 
     useEffect(() => {
         let listener: (event: mapboxgl.MapMouseEvent) => void;
+        let openFileEventListener: (event: Event) => void;
+        const brainClient = BrainApi.getInstance();
         if (map) {
             listener = (event: mapboxgl.MapMouseEvent) => {
                 if (loading) return;
@@ -109,10 +111,24 @@ export const MapInteraction = (props: Props) => {
                 newMarkers.push(marker);
                 setMarkers(newMarkers);
 
-                const brainClient = BrainApi.getInstance();
                 brainClient.setMarkers(newMarkers.slice());
             };
             map.on("click", listener);
+
+            openFileEventListener = (ev: Event) => {
+                console.log((ev as CustomEvent).detail);
+                for (const marker of markers) {
+                    marker.remove();
+                }
+                // todo: clear directons
+                setMarkers([...brainClient.points]);
+                for (const point of brainClient.points) {
+                    point.addTo(map);
+                }
+                brainClient.setMarkers([...brainClient.points]);
+            };
+
+            document.body.addEventListener("abacaba", openFileEventListener);
 
             getDirections();
 
@@ -121,6 +137,10 @@ export const MapInteraction = (props: Props) => {
         return () => {
             if (map) {
                 map.off("click", listener);
+                document.body.removeEventListener(
+                    "abacaba",
+                    openFileEventListener
+                );
             }
         };
     }, [map, getDirections, markers, loading]);

@@ -8,16 +8,28 @@
     align-items: center;
 
     /* background-color: rgba(14, 16, 18, 0.6); */
-    background-color: #0e1012;
-    color: white;
+
     padding-top: 0.7em;
     padding-bottom: 0.7em;
     padding-left: 1em;
     padding-right: 1em;
+}
 
+.header:hover {
+    cursor: pointer;
+}
+
+.header-dark {
+    background-color: #0e1012;
+    color: white;
+    border-bottom: white 1px solid;
     margin-bottom: 0.5em;
+}
 
-    border-bottom: azure 1px solid;
+.header-light {
+    background-color: white;
+    color: #0e1012;
+    border-bottom: var(--main-blue-color) 1px solid;
 }
 
 .router-icon-span {

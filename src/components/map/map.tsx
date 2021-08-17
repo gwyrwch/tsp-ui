@@ -10,10 +10,11 @@ mapboxgl.accessToken =
 interface Props {
     tour: Array<Number>;
     loading: boolean;
+    isAuth: boolean;
 }
 
 export const Map = (props: Props) => {
-    const { tour, loading } = props;
+    const { tour, loading, isAuth } = props;
 
     const [map, setMap] = useState<mapboxgl.Map>();
     const [travelMode, setTravelMode] = useState<string>("driving");
@@ -52,6 +53,7 @@ export const Map = (props: Props) => {
                 tour={tour}
                 loading={loading}
                 travelMode={travelMode}
+                isAuth={isAuth}
             ></MapInteraction>
         </div>
     );

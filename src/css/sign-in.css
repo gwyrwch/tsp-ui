@@ -145,10 +145,10 @@
     margin: 0;
     border: 0;
 
-    padding-left: 24px !important;
+    /* padding-left: 24px !important;
     padding-right: 24px !important;
     padding-top: 12px !important;
-    padding-bottom: 12px !important;
+    padding-bottom: 12px !important; */
 }
 
 .sign-in-form span,

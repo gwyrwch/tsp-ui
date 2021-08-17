@@ -10,6 +10,7 @@ import { Menu } from "./menu";
 import { AllFilesModalModal } from "./modal/all-files-modal";
 import { InputModal } from "./modal/input-modal";
 import { Modal } from "./modal/modal";
+import RangeSlider from "./range-slider";
 
 interface Props {
     auth: firebase.auth.Auth;
@@ -30,18 +31,15 @@ export const MainPage = (props: Props) => {
     const [tour, setTour] = useState<Array<Number>>([]);
     const [currentUser, setCurrentUser] = useState<firebase.User | null>();
     const [loading, setLoading] = useState<boolean>(false);
-    const [errorModalMessage, setErrorModalMessage] = useState<string | null>(
-        null
-    );
-    const [allFilesModalData, setAllFilesModalData] = useState<string | null>(
-        null
-    );
+    const [errorModalMessage, setErrorModalMessage] =
+        useState<string | null>(null);
+    const [allFilesModalData, setAllFilesModalData] =
+        useState<string | null>(null);
 
     const [currentFile, setCurrentFile] = useState<string>("");
-    const [
-        requestTypeForModalSubmit,
-        setRequestTypeForModalSubmit,
-    ] = useState<RequestType>(RequestType.NONE);
+    const [requestTypeForModalSubmit, setRequestTypeForModalSubmit] =
+        useState<RequestType>(RequestType.NONE);
+    const [rangeval, setRangeval] = useState<number>(5);
 
     const onAuthStateChange = useCallback(() => {
         return auth.onAuthStateChanged((user) => {
@@ -61,12 +59,12 @@ export const MainPage = (props: Props) => {
             console.log("cannot build matrix");
             return;
         }
+
         setLoading(true);
 
         await brainClient.buildMatrix();
-        const response = await brainClient.run(currentUser?.uid);
+        const response = await brainClient.run(currentUser?.uid, rangeval);
 
-        console.log(response);
         const newTour = response["tour"];
         newTour.push(newTour[0]);
         setTour(newTour);
@@ -112,6 +110,9 @@ export const MainPage = (props: Props) => {
 
         setLoading(true);
         const response = await brainClient.getAllFiles(currentUser.uid);
+        const response1 = await brainClient.getAllFiles1(currentUser.uid);
+        console.log("1KEK", response);
+        console.log("2KEK", response1);
         setLoading(false);
 
         return response;
@@ -227,6 +228,7 @@ export const MainPage = (props: Props) => {
                 <Header
                     auth={auth}
                     isSignedIn={currentUser ? true : false}
+                    isHeaderWithButtons={true}
                 ></Header>
                 <Menu
                     runOnClick={run}
@@ -237,7 +239,13 @@ export const MainPage = (props: Props) => {
                     openFileOnClick={openFileOnClick}
                     runLoading={loading}
                 ></Menu>
-                <div
+                <RangeSlider
+                    onChange={(event) =>
+                        setRangeval(+event.currentTarget.value)
+                    }
+                    rangeval={rangeval}
+                ></RangeSlider>
+                {/* <div
                     style={{
                         color: "#fff",
                         marginLeft: "1em",
@@ -245,9 +253,13 @@ export const MainPage = (props: Props) => {
                     }}
                 >
                     Current file: <b>{currentFile}</b>
-                </div>
+                </div> */}
             </div>
-            <Map tour={tour} loading={loading}></Map>
+            <Map
+                tour={tour}
+                loading={loading}
+                isAuth={currentUser !== null}
+            ></Map>
         </div>
     );
 };

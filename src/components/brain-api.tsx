@@ -30,6 +30,7 @@ export default class BrainApi {
     }
 
     setMatrix(matrix: Array<Array<Number>>) {
+        console.log(matrix);
         for (let i = 0; i < matrix.length; i++) {
             for (let j = 0; j < matrix.length; j++) {
                 const val = Math.floor(
@@ -102,12 +103,21 @@ export default class BrainApi {
         return response.json();
     }
 
-    async run(uid: string | undefined) {
+    async getAllFiles1(uid: string) {
+        const url = new URL("http://localhost:3002/alluserfiles");
+        url.search = new URLSearchParams({ userId: uid }).toString();
+
+        const resp = await fetch(url.toString());
+        return resp.json();
+    }
+
+    async run(uid: string | undefined, rangeEval: number) {
         const response = await this.fetchData(
             "run",
             JSON.stringify({
                 userId: uid ? uid : "DEFAULT_USER",
                 matrix: this.matrix,
+                timeMs: rangeEval * 1000,
             })
         );
 
@@ -115,7 +125,6 @@ export default class BrainApi {
     }
 
     async newFile(uid: string, fileName: string) {
-        console.log(uid, fileName);
         const response = await this.fetchData(
             "newfile",
             JSON.stringify({

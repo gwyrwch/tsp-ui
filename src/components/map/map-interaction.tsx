@@ -9,13 +9,14 @@ interface Props {
     tour: Array<Number>;
     loading: boolean;
     travelMode: string;
+    isAuth: boolean;
 }
 
 mapboxgl.accessToken =
     "pk.eyJ1IjoiZ3d5cndjaCIsImEiOiJja254NWpwbG8wNjVxMnByeHFnenJuZHN0In0.TcPjWaplIJGJccgDCgRwoA";
 
 export const MapInteraction = (props: Props) => {
-    const { map, tour, loading, travelMode } = props;
+    const { map, tour, loading, travelMode, isAuth } = props;
     const [markers, setMarkers] = useState<Marker[]>([]);
     // const [loading, setLoading] = useState<boolean>(false);
     // const [durations, setDurations] = useState<Array<Array<Number>>>();
@@ -99,6 +100,10 @@ export const MapInteraction = (props: Props) => {
         if (map) {
             listener = (event: mapboxgl.MapMouseEvent) => {
                 if (loading) return;
+                console.log(isAuth);
+                if (markers.length >= 10 && !isAuth) {
+                    return;
+                }
                 const point = event.lngLat;
 
                 const marker = new mapboxgl.Marker({ color: "#007afc" })
@@ -188,7 +193,7 @@ export const MapInteraction = (props: Props) => {
     return (
         <div className="marker-list-container">
             {markerList}
-            {loading ? "loading" : "loaded"}
+            {/* {loading ? "loading" : "loaded"} */}
         </div>
     );
 };

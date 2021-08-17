@@ -6,10 +6,11 @@ import firebase from "../firebase/firebase";
 interface Props {
     auth: firebase.auth.Auth;
     isSignedIn: boolean;
+    isHeaderWithButtons: boolean;
 }
 
 export const Header = (props: Props) => {
-    const { auth, isSignedIn } = props;
+    const { auth, isSignedIn, isHeaderWithButtons } = props;
     const displayButtons = isSignedIn ? (
         <button className="header-button" onClick={() => auth.signOut()}>
             Sign out
@@ -32,8 +33,15 @@ export const Header = (props: Props) => {
     );
 
     return (
-        <div className="header">
-            <div className="router-icon-container">
+        <div
+            className={`header ${
+                isHeaderWithButtons ? "header-dark" : "header-light"
+            }`}
+        >
+            <div
+                className="router-icon-container"
+                onClick={() => navigate("router")}
+            >
                 <IconContext.Provider
                     value={{
                         className: "router-icon",
@@ -45,8 +53,11 @@ export const Header = (props: Props) => {
                     <span>R</span>outer
                 </span>
             </div>
-
-            <div className="header-buttons-container">{displayButtons}</div>
+            {isHeaderWithButtons ? (
+                <div className="header-buttons-container">{displayButtons}</div>
+            ) : (
+                ""
+            )}
         </div>
     );
 };

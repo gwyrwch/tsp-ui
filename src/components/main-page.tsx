@@ -1,6 +1,5 @@
 import mapboxgl from "mapbox-gl";
 import React, { useCallback, useEffect, useState } from "react";
-import { collapseTextChangeRangesAcrossMultipleVersions } from "typescript";
 import validFilename from "valid-filename";
 import firebase from "../firebase/firebase";
 import BrainApi from "./brain-api";
@@ -26,15 +25,17 @@ enum RequestType {
 }
 
 export const MainPage = (props: Props) => {
-    const { auth, database } = props;
+    const { auth } = props;
     const brainClient = BrainApi.getInstance();
     const [tour, setTour] = useState<Array<Number>>([]);
     const [currentUser, setCurrentUser] = useState<firebase.User | null>();
     const [loading, setLoading] = useState<boolean>(false);
-    const [errorModalMessage, setErrorModalMessage] =
-        useState<string | null>(null);
-    const [allFilesModalData, setAllFilesModalData] =
-        useState<string | null>(null);
+    const [errorModalMessage, setErrorModalMessage] = useState<string | null>(
+        null
+    );
+    const [allFilesModalData, setAllFilesModalData] = useState<string | null>(
+        null
+    );
 
     const [currentFile, setCurrentFile] = useState<string>("");
     const [requestTypeForModalSubmit, setRequestTypeForModalSubmit] =
